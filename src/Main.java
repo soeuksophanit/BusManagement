@@ -4,13 +4,15 @@ public class Main {
     public static void main(String[] args) {
 
         int[][] bus_seats;
-        int bus=0,seat=0;
         int[] unavailable;
         int[] available;
         int opt;
+        int bus=0,seat=0;
         int chair_booking,checkID;
         int count_list_bus=0 ;
         String answer_to_booking,reset_seat;
+        String redColorCode = "\u001B[31m";
+        String resetColorCode = "\u001B[0m";
         Scanner sc = new Scanner(System.in);
 
         do{
@@ -23,10 +25,10 @@ public class Main {
                 System.out.println();
                 break;
             }else {
-                System.out.println("\n-------------------------------------------");
-                System.out.println("Seat can not less than 15 and more than 45 !!");
-                System.out.println("Please enter the information again !!");
-                System.out.println("---------------------------------------------\n");
+                System.out.println(redColorCode+"\n-------------------------------------------"+resetColorCode);
+                System.out.println(redColorCode+"Seat can not less than 15 and more than 45 !!"+resetColorCode);
+                System.out.println(redColorCode+"Please enter the information again !!"+resetColorCode);
+                System.out.println(redColorCode+"---------------------------------------------\n"+resetColorCode);
 
             }
         }while (true);
@@ -55,9 +57,13 @@ public class Main {
         while (true){
             System.out.println("---------- BUS MANAGEMENT SYSTEM -----------");
             System.out.println("1- Check Bus.");
+            System.out.println("--------------------------------------------");
             System.out.println("2- Booking Bus.");
+            System.out.println("--------------------------------------------");
             System.out.println("3- Cancel Booking.");
+            System.out.println("--------------------------------------------");
             System.out.println("4- Reset Bus.");
+            System.out.println("--------------------------------------------");
             System.out.println("5- Exit.");
             System.out.println("--------------------------------------------");
             System.out.print("-> Choose Option (1-5) : ");
@@ -85,7 +91,7 @@ public class Main {
                     System.out.println("---------------------------------------------");
 
                     for (int i = 0; i < bus; i++) {
-                        System.out.printf("%-5d\t%-10s\t%-15d\t%-15d\n", (i + 1), bus_seats[i].length, seat_available[i], seat_unavailable[i]);
+                        System.out.printf(redColorCode+"%-5d\t%-10s\t%-15d\t%-15d\n"+resetColorCode, (i + 1), bus_seats[i].length, seat_available[i], seat_unavailable[i]);
                         System.out.println("---------------------------------------------");
                     }
 
@@ -154,15 +160,15 @@ public class Main {
                     if (chair_booking==0)
                         break ;
                     if (bus_seats[checkID-1][chair_booking-1]==0){
-                        System.out.println("----------------------------------");
-                        System.out.println("Chair is unavailable right now !!");
-                        System.out.println("----------------------------------");
+                        System.out.println(redColorCode+"----------------------------------"+resetColorCode);
+                        System.out.println(redColorCode+"Chair is unavailable right now !!"+resetColorCode);
+                        System.out.println(redColorCode+"----------------------------------"+resetColorCode);
                         break ;
                     }
                     if (chair_booking>bus_seats[checkID-1].length){
-                        System.out.println("\n----------------------------------");
-                        System.out.println("We have only "+ seat + " chairs !!");
-                        System.out.println("----------------------------------");
+                        System.out.println(redColorCode+"\n----------------------------------"+resetColorCode);
+                        System.out.println(redColorCode+"We have only "+ seat + " chairs !!"+resetColorCode);
+                        System.out.println(redColorCode+"----------------------------------"+resetColorCode);
                         break ;
                     }
 
@@ -173,14 +179,14 @@ public class Main {
                         bus_seats[checkID-1][chair_booking-1] = 0;
                         unavailable[checkID-1]+=1;
                         available[checkID-1]-=1;
-                        System.out.println("----------------------------------");
-                        System.out.println("You have booked chair number : "+ chair_booking);
-                        System.out.println("----------------------------------\n");
+                        System.out.println(redColorCode+"----------------------------------"+resetColorCode);
+                        System.out.println(redColorCode+"You have booked chair number : "+ chair_booking+resetColorCode);
+                        System.out.println(redColorCode+"----------------------------------\n"+resetColorCode);
                         break ;
                     }else {
-                        System.out.println("\n-------------------------------");
-                        System.out.println("You do not booking any seats !! ");
-                        System.out.println("---------------------------------");
+                        System.out.println(redColorCode+"\n-------------------------------"+resetColorCode);
+                        System.out.println(redColorCode+"You do not booking any seats !! "+resetColorCode);
+                        System.out.println(redColorCode+"---------------------------------"+resetColorCode);
                         break ;
                     }
                 case 3 :
@@ -189,9 +195,9 @@ public class Main {
                     System.out.print("-> Enter Bus ID : ");
                     bus_id = sc.nextInt();
                     if(bus_id > bus){
-                        System.out.println("\n----------------------");
-                        System.out.println("We have only "+ bus + " bus !!");
-                        System.out.println("----------------------\n");
+                        System.out.println(redColorCode+"\n----------------------"+resetColorCode);
+                        System.out.println(redColorCode+"We have only "+ bus + " bus !!"+resetColorCode);
+                        System.out.println(redColorCode+"----------------------\n"+resetColorCode);
                         break;
                     }
 
@@ -219,29 +225,29 @@ public class Main {
                         ans = sc.next();
                         if (ans.equalsIgnoreCase("Y")){
                             bus_seats[bus_id-1][cancel_seat-1] = 1;
-                            System.out.println("\n-----------------------------------------------------");
-                            System.out.println("Seat number "+ cancel_seat + " was cancel booking successfully !!");
-                            System.out.println("-------------------------------------------------------\n");
+                            System.out.println(redColorCode+"\n-----------------------------------------------------"+resetColorCode);
+                            System.out.println(redColorCode+"Seat number "+ cancel_seat + " was cancel booking successfully !!"+resetColorCode);
+                            System.out.println(redColorCode+"-------------------------------------------------------\n"+resetColorCode);
                             break;
                         }else {
-                            System.out.println("\n------------------------------------------------");
-                            System.out.println("Seat number "+ cancel_seat + " was not cancel booking !!");
-                            System.out.println("--------------------------------------------------\n");
+                            System.out.println(redColorCode+"\n------------------------------------------------"+resetColorCode);
+                            System.out.println(redColorCode+"Seat number "+ cancel_seat + " was not cancel booking !!"+resetColorCode);
+                            System.out.println(redColorCode+"--------------------------------------------------\n"+redColorCode);
                             break;
                         }
                     }else {
-                        System.out.println("\n----------------------------------------");
-                        System.out.println("Seat number "+ cancel_seat + " Already Available !!");
-                        System.out.println("-------------------------------------------\n");
+                        System.out.println(redColorCode+"\n----------------------------------------"+resetColorCode);
+                        System.out.println(redColorCode+"Seat number "+ cancel_seat + " Already Available !!"+resetColorCode);
+                        System.out.println(redColorCode+"-------------------------------------------\n"+resetColorCode);
                     }
                     break;
                 case 4 :
                     System.out.print("-> Enter ID of Bus you want to reset : ");
                     id = sc.nextInt();
                     if(id>bus){
-                        System.out.println("\n--------------------------");
-                        System.out.println("We have only "+ bus+" bus !!");
-                        System.out.println("----------------------------\n");
+                        System.out.println(redColorCode+"\n--------------------------"+resetColorCode);
+                        System.out.println(redColorCode+"We have only "+ bus+" bus !!"+resetColorCode);
+                        System.out.println(redColorCode+"----------------------------\n"+resetColorCode);
                         break;
                     }else {
                         System.out.print("Bus ID "+ id+ " was reset with all seats available? (y/n) :");
@@ -250,9 +256,9 @@ public class Main {
                             for (int i = 0;i<seat;i++){
                                 bus_seats[id-1][i] = 1;
                             }
-                            System.out.println("\n-----------------------------------------");
-                            System.out.println("Bus ID "+ id+ " was reset successfully !!");
-                            System.out.println("-----------------------------------------\n");
+                            System.out.println(redColorCode+"\n-----------------------------------------"+resetColorCode);
+                            System.out.println(redColorCode+"Bus ID "+ id+ " was reset successfully !!"+resetColorCode);
+                            System.out.println(redColorCode+"-----------------------------------------\n"+resetColorCode);
                         }
                     }
                     break;
@@ -261,8 +267,16 @@ public class Main {
                     System.out.print("Are you sure you want to quit ? (yes/no) : ");
                     answer = sc.next();
                     if(answer.equalsIgnoreCase("Y") ||answer.equalsIgnoreCase("yes") ){
+                        System.out.println("\n------------------");
+                        System.out.println("Good Bye !! See ya");
+                        System.out.println("------------------");
+
                         return;
                     }
+                default:
+                    System.out.println(redColorCode+"--------------------------"+resetColorCode);
+                    System.out.println(redColorCode+"We have only 5 options !!"+resetColorCode);
+                    System.out.println(redColorCode+"--------------------------\n"+resetColorCode);
             }
         }
     }
