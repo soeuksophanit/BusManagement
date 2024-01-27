@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class Main {
     public static void main(String[] args) {
@@ -7,36 +8,54 @@ public class Main {
         int[] unavailable;
         int[] available;
         int opt;
-        int bus=0,seat=0;
+        String bus,seat;
         int chair_booking,checkID;
         int count_list_bus=0 ;
         String answer_to_booking,reset_seat;
         String redColorCode = "\u001B[31m";
         String resetColorCode = "\u001B[0m";
+        String greenColorCode = "\u001B[32m";
+        String resetColorGreen = "\u001B[0m";
         Scanner sc = new Scanner(System.in);
 
         do{
             System.out.println("---------- SETTING UP BUS ---------");
             System.out.print("-> Enter number of Bus : ");
-            bus = sc.nextInt();
+            bus = sc.nextLine();
+            if (!Pattern.matches("\\d+",bus)){
+                System.out.println(redColorCode+"\n-------------------------------------------"+resetColorCode);
+                System.out.println(redColorCode+"Bus can not less than or equal 0 !!"+resetColorCode);
+                System.out.println(redColorCode+"Please enter the information again only number !!"+resetColorCode);
+                System.out.println(redColorCode+"---------------------------------------------\n"+resetColorCode);
+                continue;
+            }
+            if (Integer.parseInt(bus) <=0){
+                System.out.println(redColorCode+"\n-------------------------------------------"+resetColorCode);
+                System.out.println(redColorCode+"Bus can not less than or equal 0 !!"+resetColorCode);
+                System.out.println(redColorCode+"---------------------------------------------\n"+resetColorCode);
+                continue;
+            }
             System.out.print("-> Enter number of Seat of Bus : ");
-            seat = sc.nextInt();
-            if (seat>=15 && seat<=45){
+            seat = sc.nextLine();
+            if (Integer.parseInt(seat)>=15 && Integer.parseInt(seat)<=45){
                 System.out.println();
                 break;
             }else {
                 System.out.println(redColorCode+"\n-------------------------------------------"+resetColorCode);
                 System.out.println(redColorCode+"Seat can not less than 15 and more than 45 !!"+resetColorCode);
-                System.out.println(redColorCode+"Please enter the information again !!"+resetColorCode);
+                System.out.println(redColorCode+"Please enter the information again only number !!"+resetColorCode);
                 System.out.println(redColorCode+"---------------------------------------------\n"+resetColorCode);
 
             }
         }while (true);
 
 
-        bus_seats = new int[bus][seat];
-        available = new int[bus];
-        unavailable = new int[bus];
+        int numberOfBus = Integer.parseInt(bus);
+        int numberOfSeat = Integer.parseInt(seat);
+
+        bus_seats = new int[numberOfBus][numberOfSeat];
+        available = new int[numberOfBus];
+        unavailable = new int[numberOfBus];
 
         for(int i = 0;i<bus_seats.length;i++){
             for(int j=0;j<bus_seats[i].length;j++){
@@ -55,7 +74,7 @@ public class Main {
         }
 
         while (true){
-            System.out.println("---------- BUS MANAGEMENT SYSTEM -----------");
+            System.out.println(redColorCode+"---------- BUS MANAGEMENT SYSTEM -----------"+resetColorCode);
             System.out.println("1- Check Bus.");
             System.out.println("--------------------------------------------");
             System.out.println("2- Booking Bus.");
@@ -66,15 +85,15 @@ public class Main {
             System.out.println("--------------------------------------------");
             System.out.println("5- Exit.");
             System.out.println("--------------------------------------------");
-            System.out.print("-> Choose Option (1-5) : ");
+            System.out.print(redColorCode+"-> Choose Option (1-5) : "+resetColorCode);
             opt = sc.nextInt();
             System.out.println();
             switch (opt){
                 case 1 :
                     int id;
                     int[] seat_available,seat_unavailable;
-                    seat_available = new int[bus];
-                    seat_unavailable = new int[bus];
+                    seat_available = new int[numberOfBus];
+                    seat_unavailable = new int[numberOfBus];
                     for(int i=0;i<bus_seats.length;i++){
                         for(int j=0;j<bus_seats[i].length;j++){
                             if(bus_seats[i][j]==1){
@@ -90,7 +109,7 @@ public class Main {
                     System.out.println("ID\t\tSeat\t\tAvailable\tUnavailable");
                     System.out.println("---------------------------------------------");
 
-                    for (int i = 0; i < bus; i++) {
+                    for (int i = 0; i < numberOfBus; i++) {
                         System.out.printf(redColorCode+"%-5d\t%-10s\t%-15d\t%-15d\n"+resetColorCode, (i + 1), bus_seats[i].length, seat_available[i], seat_unavailable[i]);
                         System.out.println("---------------------------------------------");
                     }
@@ -109,12 +128,12 @@ public class Main {
                             break break_time;
                         }
 
-                        for(int i=0;i<seat;i++){
+                        for(int i=0;i<numberOfSeat;i++){
                             if (bus_seats[id-1][i]==1){
                                 cnt_available+=1;
                             }
                             count_list_bus+=1;
-                            String msg = bus_seats[id-1][i] == 0 ? "(-)" : "(+)";
+                            String msg = bus_seats[id-1][i] == 0 ? redColorCode+"(-)"+resetColorCode : greenColorCode+"(+)"+resetColorGreen;
                             if(count_list_bus%5==0){
                                 System.out.print(msg+" "+(i+1)+"\t\t" );
                                 System.out.println();
@@ -132,18 +151,18 @@ public class Main {
                     System.out.print("=> Enter Bus ID : ");
                     checkID = sc.nextInt();
                     System.out.println();
-                    if (checkID >bus) {
+                    if (checkID >numberOfBus) {
                         System.out.println("--------------------------");
-                        System.out.println("We have only "+ bus + " !!");
+                        System.out.println("We have only "+ bus + " buses !!");
                         System.out.println("--------------------------");
                         break;
                     }
-                    for(int i=0;i<seat;i++){
+                    for(int i=0;i<numberOfSeat;i++){
                         if (bus_seats[checkID-1][i]==1){
                             cnt_available+=1;
                         }
                         cnt_bus+=1;
-                        String msg = bus_seats[checkID-1][i] == 0 ? "(-)" : "(+)";
+                        String msg = bus_seats[checkID-1][i] == 0 ? redColorCode+"(-)"+resetColorCode : greenColorCode+"(+)"+resetColorGreen;
                         if(cnt_bus%5==0){
                             System.out.print(msg+" "+(i+1)+"\t\t" );
                             System.out.println();
@@ -172,16 +191,16 @@ public class Main {
                         break ;
                     }
 
-                    System.out.print("=> Do you want to chair number "+chair_booking + "? (y/n) : ");
+                    System.out.print(redColorCode+"=> Do you want to chair number "+chair_booking + "? (y/n) : "+resetColorCode);
                     answer_to_booking = sc.next();
 
                     if(answer_to_booking.equalsIgnoreCase("Y")){
                         bus_seats[checkID-1][chair_booking-1] = 0;
                         unavailable[checkID-1]+=1;
                         available[checkID-1]-=1;
-                        System.out.println(redColorCode+"----------------------------------"+resetColorCode);
-                        System.out.println(redColorCode+"You have booked chair number : "+ chair_booking+resetColorCode);
-                        System.out.println(redColorCode+"----------------------------------\n"+resetColorCode);
+                        System.out.println(redColorCode+"------------------------------------------------"+resetColorCode);
+                        System.out.println(redColorCode+"You have booked chair number : "+ chair_booking+" from bus ID "+ checkID +resetColorCode);
+                        System.out.println(redColorCode+"------------------------------------------------\n"+resetColorCode);
                         break ;
                     }else {
                         System.out.println(redColorCode+"\n-------------------------------"+resetColorCode);
@@ -194,7 +213,7 @@ public class Main {
                     String ans;
                     System.out.print("-> Enter Bus ID : ");
                     bus_id = sc.nextInt();
-                    if(bus_id > bus){
+                    if(bus_id > numberOfBus){
                         System.out.println(redColorCode+"\n----------------------"+resetColorCode);
                         System.out.println(redColorCode+"We have only "+ bus + " bus !!"+resetColorCode);
                         System.out.println(redColorCode+"----------------------\n"+resetColorCode);
@@ -202,12 +221,12 @@ public class Main {
                     }
 
                     System.out.println("\n---------- DISPLAY BUS INFORMATION ----------");
-                    for(int i=0;i<seat;i++){
+                    for(int i=0;i<numberOfSeat;i++){
                         if (bus_seats[bus_id-1][i]==1){
                             count_seat_ava+=1;
                         }
                         cnt_bus_num+=1;
-                        String msg = bus_seats[bus_id-1][i] == 0 ? "(-)" : "(+)";
+                        String msg = bus_seats[bus_id-1][i] == 0 ? redColorCode+"(-)"+resetColorCode : greenColorCode+"(+)"+resetColorGreen;
                         if(cnt_bus_num%5==0){
                             System.out.print(msg+" "+(i+1)+"\t\t" );
                             System.out.println();
@@ -244,7 +263,7 @@ public class Main {
                 case 4 :
                     System.out.print("-> Enter ID of Bus you want to reset : ");
                     id = sc.nextInt();
-                    if(id>bus){
+                    if(id>numberOfBus){
                         System.out.println(redColorCode+"\n--------------------------"+resetColorCode);
                         System.out.println(redColorCode+"We have only "+ bus+" bus !!"+resetColorCode);
                         System.out.println(redColorCode+"----------------------------\n"+resetColorCode);
@@ -253,7 +272,7 @@ public class Main {
                         System.out.print("Bus ID "+ id+ " was reset with all seats available? (y/n) :");
                         reset_seat = sc.next();
                         if(reset_seat.equalsIgnoreCase("Y")){
-                            for (int i = 0;i<seat;i++){
+                            for (int i = 0;i<numberOfSeat;i++){
                                 bus_seats[id-1][i] = 1;
                             }
                             System.out.println(redColorCode+"\n-----------------------------------------"+resetColorCode);
