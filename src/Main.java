@@ -5,8 +5,6 @@ public class Main {
     public static void main(String[] args) {
 
         int[][] bus_seats;
-        int[] unavailable;
-        int[] available;
         int opt;
         String bus,seat;
         int chair_booking,checkID;
@@ -54,22 +52,10 @@ public class Main {
         int numberOfSeat = Integer.parseInt(seat);
 
         bus_seats = new int[numberOfBus][numberOfSeat];
-        available = new int[numberOfBus];
-        unavailable = new int[numberOfBus];
 
         for(int i = 0;i<bus_seats.length;i++){
             for(int j=0;j<bus_seats[i].length;j++){
                 bus_seats[i][j] = 1;
-            }
-        }
-
-        for(int i=0;i<bus_seats.length;i++){
-            for(int j=0;j<bus_seats[i].length;j++){
-                if(bus_seats[i][j]==1){
-                    available[i]+=1;
-                }else {
-                    unavailable[i]+=1;
-                }
             }
         }
 
@@ -196,8 +182,6 @@ public class Main {
 
                     if(answer_to_booking.equalsIgnoreCase("Y")){
                         bus_seats[checkID-1][chair_booking-1] = 0;
-                        unavailable[checkID-1]+=1;
-                        available[checkID-1]-=1;
                         System.out.println(redColorCode+"------------------------------------------------"+resetColorCode);
                         System.out.println(redColorCode+"You have booked chair number : "+ chair_booking+" from bus ID "+ checkID +resetColorCode);
                         System.out.println(redColorCode+"------------------------------------------------\n"+resetColorCode);
@@ -289,7 +273,6 @@ public class Main {
                         System.out.println("\n------------------");
                         System.out.println("Good Bye !! See ya");
                         System.out.println("------------------");
-
                         return;
                     }
                 default:
